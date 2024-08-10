@@ -1,5 +1,6 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import { AlbumScreen, DetailsScreen, HomeScreen } from "../screens";
+import { Album } from "../api/albums/types";
 
 const Stack = createStackNavigator<MainStackParams>();
 
@@ -11,6 +12,7 @@ export type MainStackParams = {
   };
   Details: {
     artistName: string;
+    album: Album;
   };
 };
 

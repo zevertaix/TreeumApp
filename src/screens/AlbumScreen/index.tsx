@@ -31,7 +31,6 @@ const AlbumScreen = () => {
   const queryStatuses = useAppSelector(selectAlbumsQueryStatuses);
   const navigation = useNavigation<NavigationProp<MainStackParams>>();
   const { params } = useRoute<RouteProp<MainStackParams, "Album">>();
-  console.log(album);
 
   useEffect(() => {
     dispatch(fetchAlbum(params));
@@ -40,7 +39,7 @@ const AlbumScreen = () => {
     <SafeAreaView
       style={{ paddingHorizontal: 16, flex: 1, backgroundColor: colors.white }}
     >
-      {!queryStatuses.fetchAlbum && (
+      {!queryStatuses.fetchAlbum && album && (
         <>
           <View
             style={{
@@ -77,7 +76,8 @@ const AlbumScreen = () => {
                 <Pressable
                   onPress={() =>
                     navigation.navigate("Details", {
-                      artistName: album?.artist || "",
+                      artistName: album?.artist,
+                      album,
                     })
                   }
                 >
@@ -103,15 +103,7 @@ const AlbumScreen = () => {
               }}
             />
           </View>
-          <View
-            style={{
-              backgroundColor: colors.accent,
-              height: 2,
-              borderRadius: 5,
-              width: "100%",
-              marginVertical: 20,
-            }}
-          />
+          <View style={styles.greenDivider} />
           <FlatList
             data={album?.tracks?.track || []}
             ItemSeparatorComponent={() => (
@@ -146,6 +138,13 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     paddingVertical: 12,
+  },
+  greenDivider: {
+    backgroundColor: colors.accent,
+    height: 2,
+    borderRadius: 5,
+    width: "100%",
+    marginVertical: 20,
   },
 });
 
