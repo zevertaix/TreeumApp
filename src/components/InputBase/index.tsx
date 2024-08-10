@@ -105,7 +105,7 @@ const InputBase = React.forwardRef<TextInput, InputProps>(
   }
 );
 
-export const styles = StyleSheet.create({
+const styles = StyleSheet.create({
   input: {
     height: 48,
     borderRadius: 12,

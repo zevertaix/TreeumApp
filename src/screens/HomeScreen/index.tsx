@@ -8,31 +8,43 @@ import colors from "../../theme";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { fetchTopAlbums, selectAlbums } from "../../redux/reducers/albumsSlice";
 import { AlbumCard } from "../../components";
+import { NavigationProp, useNavigation } from "@react-navigation/native";
+import { MainStackParams } from "../../navigation/MainStack";
 
 const HomeScreen = () => {
   const dispatch = useAppDispatch();
   const insets = useSafeAreaInsets();
   const albums = useAppSelector(selectAlbums);
+  const navigation = useNavigation<NavigationProp<MainStackParams>>();
 
   useEffect(() => {
     dispatch(fetchTopAlbums());
   }, []);
 
   return (
-    <SafeAreaView edges={["top"]} style={styles.container}>
+    <View style={styles.container}>
       <FlatList
-        data={albums?.topalbums.album}
+        data={albums?.topalbums?.album}
         numColumns={2}
         keyExtractor={(item) => item.url + item.mbid}
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}
         ItemSeparatorComponent={() => <View style={{ height: 20 }} />}
         columnWrapperStyle={{ justifyContent: "space-between" }}
-        contentContainerStyle={{ paddingBottom: insets.bottom }}
+        contentContainerStyle={{
+          paddingBottom: insets.bottom,
+          paddingTop: insets.top,
+        }}
         renderItem={({ item }) => {
           console.log(item.image.filter((el) => el.size === "large"));
           return (
             <AlbumCard
+              onPress={() =>
+                navigation.navigate("Album", {
+                  artist: item.artist.name,
+                  album: item.name,
+                })
+              }
               playsCount={item.playcount}
               title={item.name}
               artistName={item.artist.name}
@@ -41,7 +53,7 @@ const HomeScreen = () => {
           );
         }}
       />
-    </SafeAreaView>
+    </View>
   );
 };
 

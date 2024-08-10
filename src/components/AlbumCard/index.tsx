@@ -14,11 +14,18 @@ interface IAlbumCard {
   artistName: string;
   image: string;
   playsCount: number;
+  onPress: () => void;
 }
 
-const AlbumCard = ({ title, artistName, image, playsCount }: IAlbumCard) => {
+const AlbumCard = ({
+  title,
+  artistName,
+  image,
+  playsCount,
+  onPress,
+}: IAlbumCard) => {
   return (
-    <Pressable style={styles.container}>
+    <Pressable style={styles.container} onPress={onPress}>
       <Image
         resizeMode="contain"
         source={{ uri: image || "https://iili.io/HlHy9Yx.png" }}

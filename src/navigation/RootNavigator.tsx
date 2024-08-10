@@ -10,7 +10,7 @@ export type StackParams = {
   MainStack: NavigatorScreenParams<MainStackParams>;
 };
 
-export default () => {
+const RootNavigator = () => {
   return (
     <Stack.Navigator
       screenOptions={{
@@ -24,3 +24,5 @@ export default () => {
     </Stack.Navigator>
   );
 };
+
+export default RootNavigator;
