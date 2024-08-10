@@ -64,7 +64,12 @@ const initialState: InitialState = {
 export const albumsSlice = createSlice({
   name: "albums",
   initialState,
-  reducers: {},
+  reducers: {
+    resetAlbum: (state) => {
+      state.album = null;
+      state.artist = null;
+    },
+  },
   extraReducers(builder) {
     builder
       .addCase(fetchTopAlbums.pending, (state) => {
@@ -106,4 +111,4 @@ export const selectArtist = (state: RootState) => state.albums.artist;
 export const selectAlbumsQueryStatuses = (state: RootState) =>
   state.albums.queryStatuses;
 
-export const {} = albumsSlice.actions;
+export const { resetAlbum } = albumsSlice.actions;

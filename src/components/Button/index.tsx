@@ -14,12 +14,30 @@ interface IButton {
   onPress: () => void;
   containerStyle?: StyleProp<ViewStyle>;
   labelStyle?: StyleProp<TextStyle>;
+  basic?: boolean;
 }
 
-const Button = ({ title, onPress, containerStyle, labelStyle }: IButton) => {
+const Button = ({
+  title,
+  onPress,
+  containerStyle,
+  basic,
+  labelStyle,
+}: IButton) => {
   return (
-    <Pressable style={[styles.container, containerStyle]} onPress={onPress}>
-      <Text style={[styles.label, labelStyle]}>{title}</Text>
+    <Pressable
+      style={[
+        styles.container,
+        basic && { backgroundColor: "transparent", paddingVertical: 0 },
+        containerStyle,
+      ]}
+      onPress={onPress}
+    >
+      <Text
+        style={[styles.label, basic && { color: colors.accent }, labelStyle]}
+      >
+        {title}
+      </Text>
     </Pressable>
   );
 };

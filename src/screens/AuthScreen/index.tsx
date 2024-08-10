@@ -7,20 +7,31 @@ import HeadphonesSVG from "../../assets/icons/HeadphonesSVG";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { StackParams } from "../../navigation/RootNavigator";
 
+const CREDENTIALS = {
+  email: "test@mail.com",
+  password: "12345678",
+};
+
 const AuthScreen = () => {
   const navigation = useNavigation<NavigationProp<StackParams>>();
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
+  const onLogin = () => {
+    if (email === CREDENTIALS.email && password === CREDENTIALS.password) {
+      navigation.navigate("MainStack", { screen: "Home" });
+    }
+  };
+
   return (
     <SafeAreaView edges={["top"]} style={styles.container}>
       <Pressable style={{ flex: 1 }} onPress={Keyboard.dismiss}>
-        <View style={styles.inputsContainer}>
+        <View style={styles.mainContainer}>
           <View style={styles.logoContainer}>
             <HeadphonesSVG width={120} height={120} />
             <Text style={styles.title}>Log In</Text>
           </View>
-          <View style={{ gap: 24 }}>
+          <View style={styles.inputsContainer}>
             <InputBase onChangeText={setEmail} value={email} label="Email" />
             <InputBase
               onChangeText={setPassword}
@@ -29,10 +40,13 @@ const AuthScreen = () => {
               hidden
             />
           </View>
+          <Button title="Log In" onPress={onLogin} />
           <Button
-            title="Log In"
+            title="Fill credentials"
+            basic
             onPress={() => {
-              navigation.navigate("MainStack", { screen: "Home" });
+              setEmail(CREDENTIALS.email);
+              setPassword(CREDENTIALS.password);
             }}
           />
         </View>
@@ -54,6 +68,9 @@ const styles = StyleSheet.create({
     color: colors.text,
   },
   inputsContainer: {
+    gap: 24,
+  },
+  mainContainer: {
     gap: 30,
     paddingVertical: 24,
     paddingHorizontal: 12,

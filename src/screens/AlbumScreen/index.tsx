@@ -17,6 +17,7 @@ import {
 import { MainStackParams } from "../../navigation/MainStack";
 import {
   fetchAlbum,
+  resetAlbum,
   selectAlbum,
   selectAlbumsQueryStatuses,
 } from "../../redux/reducers/albumsSlice";
@@ -24,6 +25,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import colors from "../../theme";
 import InfoSVG from "../../assets/icons/InfoSVG";
 import { fancyTimeFormat } from "../../helpers/formatTime";
+import { FullScreenLoader } from "../../components";
 
 const AlbumScreen = () => {
   const dispatch = useAppDispatch();
@@ -34,45 +36,20 @@ const AlbumScreen = () => {
 
   useEffect(() => {
     dispatch(fetchAlbum(params));
+
+    return () => {
+      dispatch(resetAlbum());
+    };
   }, []);
+
   return (
-    <SafeAreaView
-      style={{ paddingHorizontal: 16, flex: 1, backgroundColor: colors.white }}
-    >
-      {!queryStatuses.fetchAlbum && album && (
+    <SafeAreaView style={styles.container}>
+      {!queryStatuses.fetchAlbum && album ? (
         <>
-          <View
-            style={{
-              flexDirection: "row",
-              justifyContent: "space-between",
-              alignItems: "center",
-            }}
-          >
-            <View
-              style={{
-                gap: 6,
-                justifyContent: "space-between",
-                flex: 1,
-                paddingRight: 16,
-              }}
-            >
-              <View
-                style={{
-                  flexDirection: "row",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                  flex: 1,
-                }}
-              >
-                <Text
-                  style={{
-                    fontSize: 34,
-                    color: colors.text,
-                    fontWeight: "700",
-                  }}
-                >
-                  {album?.artist}
-                </Text>
+          <View style={styles.headerContainer}>
+            <View style={styles.leftContainer}>
+              <View style={styles.topContainer}>
+                <Text style={styles.artistLabel}>{album?.artist}</Text>
                 <Pressable
                   onPress={() =>
                     navigation.navigate("Details", {
@@ -84,13 +61,7 @@ const AlbumScreen = () => {
                   <InfoSVG width={30} height={30} />
                 </Pressable>
               </View>
-              <Text
-                style={{
-                  fontSize: 16,
-                  color: colors.text,
-                  fontWeight: "500",
-                }}
-              >
+              <Text style={styles.listenersLabel}>
                 Listeners: {album?.listeners}
               </Text>
             </View>
@@ -106,11 +77,7 @@ const AlbumScreen = () => {
           <View style={styles.greenDivider} />
           <FlatList
             data={album?.tracks?.track || []}
-            ItemSeparatorComponent={() => (
-              <View
-                style={{ height: 1, width: "100%", backgroundColor: "#dddddd" }}
-              />
-            )}
+            ItemSeparatorComponent={() => <View style={styles.listSeparator} />}
             showsVerticalScrollIndicator={false}
             renderItem={({ item }) => {
               return (
@@ -122,12 +89,19 @@ const AlbumScreen = () => {
             }}
           />
         </>
+      ) : (
+        <FullScreenLoader />
       )}
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
+  container: {
+    paddingHorizontal: 16,
+    flex: 1,
+    backgroundColor: colors.white,
+  },
   image: {
     width: 100,
     height: 100,
@@ -145,6 +119,38 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     width: "100%",
     marginVertical: 20,
+  },
+  artistLabel: {
+    fontSize: 34,
+    color: colors.text,
+    fontWeight: "700",
+  },
+  topContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    flex: 1,
+  },
+  leftContainer: {
+    gap: 6,
+    justifyContent: "space-between",
+    flex: 1,
+    paddingRight: 16,
+  },
+  headerContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  listenersLabel: {
+    fontSize: 16,
+    color: colors.text,
+    fontWeight: "500",
+  },
+  listSeparator: {
+    height: 1,
+    width: "100%",
+    backgroundColor: "#dddddd",
   },
 });
 
