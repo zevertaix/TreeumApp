@@ -14,14 +14,7 @@ const MainStack = () => {
         headerShown: false,
       }}
     >
-      <Stack.Screen
-        name="Home"
-        component={HomeScreen}
-        options={{
-          gestureEnabled: false,
-          headerShown: false,
-        }}
-      />
+      <Stack.Screen name="Home" component={HomeScreen} />
     </Stack.Navigator>
   );
 };

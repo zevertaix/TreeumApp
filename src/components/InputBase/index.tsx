@@ -12,6 +12,7 @@ import {
 } from "react-native";
 import OpenEyeSVG from "../../assets/icons/OpenEye";
 import CloseEyeSVG from "../../assets/icons/CloseEye";
+import colors from "../../theme";
 
 interface InputProps extends TextInputProps {
   value?: string;
@@ -111,7 +112,7 @@ export const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: "#f4f3f8",
-    color: "#040A2C",
+    color: colors.text,
     paddingHorizontal: 12,
     fontSize: 16,
     borderWidth: 2,
@@ -122,7 +123,7 @@ export const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   label: {
-    color: "#363840",
+    color: colors.grey70,
     marginBottom: 6,
     fontSize: 16,
   },

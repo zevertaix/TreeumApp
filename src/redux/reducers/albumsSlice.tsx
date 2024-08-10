@@ -1,21 +1,19 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../store";
+import { getTopAlbums } from "../../api/albums";
 
-export const fetchTopAlbums = createAsyncThunk(
-  "user/userProfile",
-  async (_) => {
-    try {
-      const response = await fetchTopAlbums();
-      return response;
-    } catch (err) {
-      console.warn(err);
-    }
-    return null;
+export const fetchTopAlbums = createAsyncThunk("albums/topAlbums", async () => {
+  try {
+    const response = await getTopAlbums();
+    return response.data;
+  } catch (err) {
+    console.warn("[AXIOS ERROR] fetching albums:", err);
   }
-);
+  return null;
+});
 
 interface InitialState {
-  albums: any;
+  albums: AlbumRequest | null;
   queryStatuses: {
     fetchTopAlbums: boolean;
   };

@@ -15,17 +15,11 @@ export default () => {
     <Stack.Navigator
       screenOptions={{
         headerShown: false,
+        gestureEnabled: false,
       }}
       initialRouteName="Auth"
     >
-      <Stack.Screen
-        name="Auth"
-        component={AuthScreen}
-        options={{
-          gestureEnabled: false,
-          headerShown: false,
-        }}
-      />
+      <Stack.Screen name="Auth" component={AuthScreen} />
       <Stack.Screen name="MainStack" component={MainStack} />
     </Stack.Navigator>
   );

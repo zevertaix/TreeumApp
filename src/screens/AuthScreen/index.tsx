@@ -15,20 +15,10 @@ const AuthScreen = () => {
   return (
     <SafeAreaView edges={["top"]} style={styles.container}>
       <Pressable style={{ flex: 1 }} onPress={Keyboard.dismiss}>
-        <View
-          style={{
-            gap: 30,
-            paddingVertical: 24,
-            paddingHorizontal: 12,
-          }}
-        >
-          <View style={{ alignItems: "center", gap: 20 }}>
+        <View style={styles.inputsContainer}>
+          <View style={styles.logoContainer}>
             <HeadphonesSVG width={120} height={120} />
-            <Text
-              style={{ fontSize: 34, fontWeight: "bold", color: "#040A2C" }}
-            >
-              Log In
-            </Text>
+            <Text style={styles.title}>Log In</Text>
           </View>
           <View style={{ gap: 24 }}>
             <InputBase onChangeText={setEmail} value={email} label="Email" />
@@ -59,8 +49,18 @@ const styles = StyleSheet.create({
     gap: 30,
   },
   title: {
-    fontSize: 40,
-    fontWeight: "700",
+    fontSize: 34,
+    fontWeight: "bold",
+    color: colors.text,
+  },
+  inputsContainer: {
+    gap: 30,
+    paddingVertical: 24,
+    paddingHorizontal: 12,
+  },
+  logoContainer: {
+    alignItems: "center",
+    gap: 20,
   },
 });
 
